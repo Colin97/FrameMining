@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="convex decomposition, shape decomposition, concavity, shape similarity, tree search, geometry processing">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Frame Mining</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container ">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Frame Mining: a Free Lunch for Learning Robotic Manipulation from 3D Point Clouds
+</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://cseweb.ucsd.edu/~mil070/">Minghua Liu</a><sup>*1</sup>,</span>
+            <span class="author-block">
+              <a href="https://xuanlinli17.github.io">Xuanlin Li</a><sup>*1</sup>,</span>
+            <span class="author-block">
+              <a href="https://cseweb.ucsd.edu/~haosu/lab/group.html">Zhan Ling</a><sup>*1</sup>,</span>
+            <span class="author-block">
+              <a href="https://yangyan.li">Yangyan Li</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="https://cseweb.ucsd.edu/~haosu/">Hao Su</a><sup>1</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>UC San Diego,</span>
+            <span class="author-block"><sup>2</sup>Alibaba</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Slides Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-slideshare"></i>
+                  </span>
+                  <span>Slides</span>
+                  </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/xuanlinli17/corl_22_frame_mining"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="https://youtu.be/WfYboLuMPkg"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container ">
+    <div class="hero-body">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <img src="./static/images/teaser.png"
+                     class="teaser-image"
+                     alt="teaser image."/>
+
+          <h3 class="subtitle ">
+            (Left) A 3D point cloud of a dual-arm robot pushing a chair, which can be represented in various coordinate frames without changing camera placements or requiring extra camera views. (Right) Our FrameMiner takes as input a point cloud represented in multiple candidate frames and adaptively fuses their merits, resulting in better performance.
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+             We study how choices of input point cloud coordinate frames impact learning of manipulation skills from 3D point clouds. There exist a variety of coordinate frame choices to normalize captured robot-object-interaction point clouds. We find that different frames have a profound effect on agent learning performance, and the trend is similar across 3D backbone networks. In particular, the end-effector frame and the target-part frame achieve higher training efficiency than the commonly used world frame and robot-base frame in many tasks, intuitively because they provide helpful alignments among point clouds across time steps and thus can simplify visual module learning. Moreover, the well-performing frames vary across tasks, and some tasks may benefit from multiple frame candidates. We thus propose FrameMiners to adaptively select candidate frames and fuse their merits in a task-agnostic manner. Experimentally, FrameMiners achieves on-par or significantly higher performance than the best single-frame version on five fully physical manipulation tasks adapted from ManiSkill and OCRTOC. Without changing existing camera placements or adding extra cameras, point cloud frame mining can serve as a free lunch to improve 3D manipulation learning.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <section class="section">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">PC Coordinate Frame Selection Matters</h2>
+        <div class="content has-text-justified">
+
+          <img src="./static/images/coordinate_frame.png"/>
+          Input point clouds can be represented in various coordinate frames. Different coordinate frames may provide different alignments across time steps, which may simplify network training. The figure visualizes three point clouds (three time steps) of an OpenCabinetDoor trajectory. Each row shows the same point cloud represented in different coordinate frames. 
+        </div>
+        <div class="content has-text-justified">
+          <img src="./static/images/single_frame_comparison.png"/>
+          We find that the choice of coordinate frame has a profound impact on point cloud-based object manipulation learning. In particular, the end-effector frame and the target-part frame lead to much better sample efficiency than the widely-used world frame and robot-base frame on many tasks.
+        </div> 
+      </div>
+    </div>
+    </section>
+
+
+    <section class="section">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Mining Multiple Coordinate Frames</h2>
+        <div class="content has-text-justified">
+            Since the well-performing frames vary across tasks, and some tasks may benefit from multiple frame candidates, we thus propose FrameMiners to adaptively select candidate frames and fuse their merits in a task-agnostic manner.
+            <div style="text-align: center">
+              <img src="./static/images/frameminer.png" width="70%"/>
+            </div>
+        </div>
+        <div class="content has-text-justified">
+          <img src="./static/images/single_frame_vs_frame_miners.png"/>
+          <b>Single-frame baselines (black dashed lines) vs. FrameMiners (colored solid lines). </b> On single-arm tasks (i.e., OpenCabinetDoor/Drawer), our FrameMiners perform on par with the end-effector frame, which suggests that FrameMiners can automatically select the best single frame. On dual-arm tasks, our FrameMiners significantly outperform single-frame baselines, demonstrating the advantage of coordination between multiple coordinate frames. While it matters to fuse information from multiple frames, the specific FrameMiner to choose does not create much performance difference.
+        </div> 
+      </div>
+    </div>
+    </section>
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/WfYboLuMPkg"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{liu2022frame,
+      title={Frame Mining: a Free Lunch for Learning Robotic Manipulation from 3D Point Clouds},
+      author={Liu, Minghua and Li, Xuanlin and Ling, Zhan and Li, Yangyan and Su, Hao},
+      booktitle={6th Annual Conference on Robot Learning},
+      year={2022}
+    }
+    </code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="" class="external-link" disabled>
+        <i class="fab fa-slideshare"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/xuanlinli17/corl_22_frame_mining" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is borrowed from <a
+              href="https://github.com/nerfies/nerfies.github.io">nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
